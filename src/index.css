@@ -24,6 +24,7 @@ select {
 
 button {
   min-width: 2rem;
+  cursor: pointer;
 }
 
 img {

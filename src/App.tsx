@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { css } from '@emotion/react';
+import Loader from './components/Loader';
 import Box from './components/Box';
 import Choices from './components/Choices';
 
@@ -7,18 +9,14 @@ const App = () => {
   const [data, setData] = useState<Data | null>(null);
 
   useEffect(() => {
-    async function fetchData() {
+    // simulate network throttling for loading
+    const timer = setTimeout(async () => {
       const resp = await fetch('./data.json');
       const json = await resp.json();
 
       setData(json);
       setLoading(false);
-    }
-
-    // simulate network throttling for loading
-    const timer = setTimeout(() => {
-      fetchData();
-    }, 800);
+    }, 2000);
 
     return () => {
       clearTimeout(timer);
@@ -26,11 +24,21 @@ const App = () => {
   }, []);
 
   if (loading) {
-    return <h1>Fetching data...</h1>;
+    return <Loader />;
   }
 
   return (
-    <div>
+    <div
+      css={css({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        maxWidth: '1280px',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        padding: '0.5rem',
+      })}
+    >
       <Choices max={data!.sizes[1].content.bases} data={data!.choices.bases} />
       <Choices
         max={data!.sizes[1].content.proteins}

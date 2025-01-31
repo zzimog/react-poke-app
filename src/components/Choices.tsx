@@ -7,7 +7,7 @@ type ChoiceProps = {
   label: string;
   image: string;
   extraPrice?: number;
-  onChange?: (id: string, qta: number, diff: number) => void;
+  onChange?: (props: ChoiceProps, qta: number, diff: number) => void;
 };
 
 type ChoicesProps = {
@@ -33,7 +33,7 @@ const Choice = (inProps: ChoiceProps) => {
     setQta(value);
 
     if (onChange) {
-      onChange(id, value, amount);
+      onChange(inProps, value, amount);
     }
   }
 
@@ -87,30 +87,29 @@ const Choices = ({ max, data }: ChoicesProps) => {
   const defaultExtraPrice = data.extraPrice;
 
   const [current, setCurrent] = useState([]);
+  const [extra, setExtra] = useState([]);
 
   const boxStyle: CSSProperties = {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
     gap: '0.5rem',
-    padding: '1rem',
   };
 
-  function handleChange(id: string, _qta: number, diff: number) {
-    const newValue = current + diff;
-    console.log(id, diff);
+  function handleChange(props: ChoiceProps, qta: number) {
+    const { id, _extraPrice } = props;
+    const selected = [...current, ...extra];
 
-    if (max && newValue > max) {
-      return;
-    }
-
-    setCurrent(newValue);
+    /**
+     * @todo
+     */
   }
 
   return (
-    <Box>
+    <Box style={{ padding: '1rem' }}>
       <h1 style={{ textTransform: 'capitalize' }}>
-        <span>{label}</span>
-        {max && <span>{`${current}/${max}`}</span>}
+        <span style={{ marginRight: '0.5rem' }}>{label}</span>
+        {max && <span>{`${current.length}/${max}`}</span>}
+        {extra.length > 0 && <span>{`+${extra.length} extra`}</span>}
       </h1>
 
       <div style={boxStyle}>
