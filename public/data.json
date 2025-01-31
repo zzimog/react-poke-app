@@ -1,0 +1,103 @@
+{
+  "sizes": [
+    {
+      "size": "s",
+      "label": "small",
+      "image": "./assets/poke.png",
+      "price": 8.9,
+      "content": {
+        "bases": 1,
+        "proteins": 1,
+        "sides": 3,
+        "crunch": 1,
+        "sauces": 1
+      }
+    },
+    {
+      "size": "m",
+      "label": "medium",
+      "image": "./assets/poke.png",
+      "price": 9.9,
+      "content": {
+        "bases": 2,
+        "proteins": 2,
+        "sides": 4,
+        "crunch": 2,
+        "sauces": 2
+      }
+    },
+    {
+      "size": "l",
+      "label": "large",
+      "image": "./assets/poke.png",
+      "price": 11.9,
+      "content": {
+        "bases": 2,
+        "proteins": 3,
+        "sides": 5,
+        "crunch": 3,
+        "sauces": 2
+      }
+    }
+  ],
+  "choices": {
+    "bases": {
+      "label": "base",
+      "list": [
+        {
+          "id": "riceWhite",
+          "label": "riso bianco",
+          "image": "./assets/rice_white.png"
+        },
+        {
+          "id": "riceVenus",
+          "label": "riso venere",
+          "image": "./assets/rice_venus.png"
+        },
+        {
+          "id": "salad",
+          "label": "insalata",
+          "image": "./assets/salad.png"
+        },
+        {
+          "id": "emmer",
+          "label": "farro",
+          "image": "./assets/emmer.png"
+        },
+        {
+          "id": "half",
+          "label": "metà e metà",
+          "image": "./assets/half.png"
+        }
+      ]
+    },
+    "proteins": {
+      "label": "proteine",
+      "extraPrice": 1.5,
+      "list": [
+        {
+          "id": "salmonRaw",
+          "label": "salmone crudo",
+          "image": "./assets/salmon_raw.png",
+          "extraPrice": 2.0
+        },
+        {
+          "id": "tunaRaw",
+          "label": "tonno crudo",
+          "image": "./assets/tuna_raw.png",
+          "extraPrice": 2.0
+        },
+        {
+          "id": "salmonCooked",
+          "label": "salmone cotto",
+          "image": "./assets/salmon_cooked.png"
+        },
+        {
+          "id": "tempura",
+          "label": "gamberi in tempura",
+          "image": "./assets/tempura.png"
+        }
+      ]
+    }
+  }
+}
