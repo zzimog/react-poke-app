@@ -1,12 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { css } from '@emotion/react';
 import Loader from './components/Loader';
 import Box from './components/Box';
-import Choices from './components/Choices';
+import Choices, { ChoicesList } from './components/Choices';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<Data | null>(null);
+
+  const selection = useRef(new Map<string, ChoicesList>());
+
+  function handleChoiceChange(choiceId: string, list: ChoicesList) {
+    selection.current.set(choiceId, list);
+    console.log(selection);
+  }
 
   useEffect(() => {
     // simulate network throttling for loading
@@ -16,7 +23,7 @@ const App = () => {
 
       setData(json);
       setLoading(false);
-    }, 2000);
+    }, 2);
 
     return () => {
       clearTimeout(timer);
@@ -28,56 +35,63 @@ const App = () => {
   }
 
   return (
-    <div
-      css={css({
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        maxWidth: '1280px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        padding: '0.5rem',
-      })}
-    >
-      <Choices max={data!.sizes[1].content.bases} data={data!.choices.bases} />
-      <Choices
-        max={data!.sizes[1].content.proteins}
-        data={data!.choices.proteins}
-      />
+    <div>
+      <Box>
+        {data?.sizes?.map((_size, index) => {
+          const { size, label, price } = _size;
+          const { bases, proteins, sides, crunch, sauces } = _size.content;
+
+          function format(value: number, singular: string, plural: string) {
+            return `${value} ${value > 1 ? plural : singular}`;
+          }
+
+          return (
+            <Box key={index}>
+              <div>{size}</div>
+              <div>{label}</div>
+              <div>{price.toFixed(2)} €</div>
+              <div>
+                <ul>
+                  <li>{format(bases, 'base', 'basi')}</li>
+                  <li>{format(proteins, 'proteina', 'proteine')}</li>
+                  <li>{format(sides, 'condimento', 'condimenti')} </li>
+                  <li>{format(crunch, 'croccante', 'croccanti')}</li>
+                  <li>{format(sauces, 'salsa', 'salse')}</li>
+                </ul>
+              </div>
+            </Box>
+          );
+        })}
+      </Box>
+
+      <div
+        css={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          maxWidth: '1280px',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          background: '#fff',
+        })}
+      >
+        <Choices
+          max={data!.sizes[1].content.bases}
+          data={data!.choices.bases}
+          onChange={(list) => handleChoiceChange('bases', list)}
+        />
+        <Choices
+          max={data!.sizes[1].content.proteins}
+          data={data!.choices.proteins}
+          onChange={(list) => handleChoiceChange('proteins', list)}
+        />
+        <Choices
+          max={data!.sizes[1].content.sauces}
+          data={data!.choices.sauces}
+          onChange={(list) => handleChoiceChange('sauces', list)}
+        />
+      </div>
     </div>
-  );
-
-  return (
-    <Box>
-      {data?.sizes?.map((_size, index) => {
-        const { size, label, image, price } = _size;
-        const { bases, proteins, sides, crunch, sauces } = _size.content;
-
-        function format(value: number, singular: string, plural: string) {
-          return `${value} ${value > 1 ? plural : singular}`;
-        }
-
-        return (
-          <Box key={index}>
-            <div>
-              <img src={image} alt={`${label} poke`} />
-            </div>
-            <div>{size}</div>
-            <div>{label}</div>
-            <div>{price.toFixed(2)} €</div>
-            <div>
-              <ul>
-                <li>{format(bases, 'base', 'basi')}</li>
-                <li>{format(proteins, 'proteina', 'proteine')}</li>
-                <li>{format(sides, 'condimento', 'condimenti')} </li>
-                <li>{format(crunch, 'croccante', 'croccanti')}</li>
-                <li>{format(sauces, 'salsa', 'salse')}</li>
-              </ul>
-            </div>
-          </Box>
-        );
-      })}
-    </Box>
   );
 };
 

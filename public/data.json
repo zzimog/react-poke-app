@@ -47,27 +47,22 @@
         {
           "id": "riceWhite",
           "label": "riso bianco",
-          "image": "./assets/rice_white.png"
+          "image": "./assets/bases/rice_white.png"
         },
         {
           "id": "riceVenus",
           "label": "riso venere",
-          "image": "./assets/rice_venus.png"
-        },
-        {
-          "id": "salad",
-          "label": "insalata",
-          "image": "./assets/salad.png"
+          "image": "./assets/bases/rice_venus.png"
         },
         {
           "id": "emmer",
           "label": "farro",
-          "image": "./assets/emmer.png"
+          "image": "./assets/bases/emmer.png"
         },
         {
-          "id": "half",
-          "label": "metà e metà",
-          "image": "./assets/half.png"
+          "id": "salad",
+          "label": "insalata",
+          "image": "./assets/bases/salad.png"
         }
       ]
     },
@@ -78,24 +73,79 @@
         {
           "id": "salmonRaw",
           "label": "salmone crudo",
-          "image": "./assets/salmon_raw.png",
+          "image": "./assets/proteins/salmon_raw.png",
           "extraPrice": 2.0
         },
         {
           "id": "tunaRaw",
           "label": "tonno crudo",
-          "image": "./assets/tuna_raw.png",
+          "image": "./assets/proteins/tuna_raw.png",
           "extraPrice": 2.0
         },
         {
           "id": "salmonCooked",
           "label": "salmone cotto",
-          "image": "./assets/salmon_cooked.png"
+          "image": "./assets/proteins/salmon_cooked.png"
         },
         {
           "id": "tempura",
           "label": "gamberi in tempura",
-          "image": "./assets/tempura.png"
+          "image": "./assets/proteins/tempura.png"
+        }
+      ]
+    },
+    "sauces": {
+      "label": "salse",
+      "list": [
+        {
+          "id": "agro",
+          "label": "agrodolce",
+          "image": "./assets/sauces/agro.png"
+        },
+        {
+          "id": "mango",
+          "label": "salsa al mango",
+          "image": "./assets/sauces/mango.png"
+        },
+        {
+          "id": "mayo",
+          "label": "maionese",
+          "image": "./assets/sauces/mayo.png"
+        },
+        {
+          "id": "mayoSpicy",
+          "label": "Maionese spicy",
+          "image": "./assets/sauces/mayo_spicy.png"
+        },
+        {
+          "id": "oliveOil",
+          "label": "olio d'oliva",
+          "image": "./assets/sauces/olive_oil.png"
+        },
+        {
+          "id": "ponzu",
+          "label": "salsa ponzu",
+          "image": "./assets/sauces/ponzu.png"
+        },
+        {
+          "id": "sesame",
+          "label": "salsa al sesamo",
+          "image": "./assets/sauces/sesame.png"
+        },
+        {
+          "id": "soy",
+          "label": "salsa di soia",
+          "image": "./assets/sauces/soy.png"
+        },
+        {
+          "id": "spicy",
+          "label": "salsa piccante",
+          "image": "./assets/sauces/spicy.png"
+        },
+        {
+          "id": "teriyaki",
+          "label": "salsa teriyaki",
+          "image": "./assets/sauces/teriyaki.png"
         }
       ]
     }

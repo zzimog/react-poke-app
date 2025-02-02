@@ -1,127 +1,126 @@
 import { CSSProperties, useState } from 'react';
-import { css } from '@emotion/react';
+import capitalize from '@ui/capitalize';
 import Box from './Box';
+import Choice from './Choice';
 
-type ChoiceProps = {
-  id: string;
-  label: string;
-  image: string;
-  extraPrice?: number;
-  onChange?: (props: ChoiceProps, qta: number, diff: number) => void;
+export type ChoicesList = {
+  selected: Map<number, number>;
+  items: number[];
+  extra: number[];
 };
 
-type ChoicesProps = {
+export type ChoicesProps = {
+  data: Choice;
   max?: number;
-  data: {
-    label: string;
-    extraPrice?: number;
-    list: ChoiceProps[];
-  };
+  onChange?: (list: ChoicesList) => void;
 };
 
-const Choice = (inProps: ChoiceProps) => {
-  const { id, label, image, extraPrice, onChange } = inProps;
-  const [qta, setQta] = useState(0);
+export const Choices = (inProps: ChoicesProps) => {
+  const { data, max, onChange } = inProps;
+  const { label, extraPrice: defaultExtraPrice, list } = data;
+  const allowExtra = max && defaultExtraPrice && defaultExtraPrice > 0;
 
-  function editQta(amount: number) {
-    const value = qta + amount;
-
-    if (value < 0 || value > 9) {
-      return;
-    }
-
-    setQta(value);
-
-    if (onChange) {
-      onChange(inProps, value, amount);
-    }
-  }
-
-  return (
-    <Box key={id}>
-      <div
-        css={css({
-          width: '100%',
-          height: 150,
-        })}
-      >
-        <img src={image} alt={label} />
-      </div>
-
-      <div
-        css={css({
-          padding: '1rem',
-        })}
-      >
-        <div css={css({ textTransform: 'capitalize' })}>
-          <span>{label}</span>
-        </div>
-
-        {extraPrice && (
-          <div>
-            <span>Extra +{extraPrice?.toFixed(2)} €</span>
-          </div>
-        )}
-
-        <div
-          css={css({
-            display: 'flex',
-            justifyContent: 'space-between',
-          })}
-        >
-          <button onClick={() => editQta(-1)}>
-            <span>-</span>
-          </button>
-          <span>{qta}</span>
-          <button onClick={() => editQta(+1)}>
-            <span>+</span>
-          </button>
-        </div>
-      </div>
-    </Box>
-  );
-};
-
-const Choices = ({ max, data }: ChoicesProps) => {
-  const { label, list } = data;
-  const defaultExtraPrice = data.extraPrice;
-
-  const [current, setCurrent] = useState([]);
-  const [extra, setExtra] = useState([]);
+  const [selected, setSelected] = useState({
+    items: new Map<number, number>(),
+    total: 0,
+  });
 
   const boxStyle: CSSProperties = {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-    gap: '0.5rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(max(150px, 100%/5), 1fr))',
+    gap: '1rem',
   };
 
-  function handleChange(props: ChoiceProps, qta: number) {
-    const { id, _extraPrice } = props;
-    const selected = [...current, ...extra];
+  function getList(): ChoicesList {
+    const entries = [...selected.items.entries()];
+    const selectedList = [];
 
-    /**
-     * @todo
-     */
+    // explode map
+    for (const [idx, qta] of entries) {
+      for (let i = 0; i < qta; i++) {
+        const item = list[idx];
+        item.extraPrice = item.extraPrice || defaultExtraPrice;
+        selectedList.push(idx);
+      }
+    }
+
+    // sort by extra price value
+    const sorted = selectedList.sort((idxA, idxB) => {
+      const a = list[idxA];
+      const b = list[idxB];
+
+      return a.extraPrice! <= b.extraPrice! ? 1 : -1;
+    });
+
+    return {
+      selected: selected.items,
+      items: max ? sorted.slice(0, max) : sorted,
+      extra: max ? sorted.slice(max) : [],
+    };
+  }
+
+  function handleChange(index: number, qta: number, diff: 1 | -1) {
+    const newItems = new Map(selected.items);
+    const newTotal = selected.total + diff;
+
+    if (max && !allowExtra) {
+      if (newTotal > max || newTotal < 0) {
+        return;
+      }
+    }
+
+    if (!qta || qta === 0) {
+      newItems.delete(index);
+    } else {
+      newItems.set(index, qta);
+    }
+
+    setSelected({
+      items: newItems,
+      total: newTotal,
+    });
+
+    if (onChange) {
+      const list = getList();
+      onChange(list);
+    }
   }
 
   return (
-    <Box style={{ padding: '1rem' }}>
-      <h1 style={{ textTransform: 'capitalize' }}>
-        <span style={{ marginRight: '0.5rem' }}>{label}</span>
-        {max && <span>{`${current.length}/${max}`}</span>}
-        {extra.length > 0 && <span>{`+${extra.length} extra`}</span>}
-      </h1>
+    <Box>
+      <div className="title">
+        <h1>{capitalize(label)}</h1>
+
+        <div className="title-extra">
+          {max && `${selected.total}/${max}`}
+          {max && selected.total > max && (
+            <span>
+              +
+              {getList()
+                .extra.reduce((sum, idx) => {
+                  const price = list[idx].extraPrice || defaultExtraPrice || 0;
+                  return sum + price;
+                }, 0)
+                .toFixed(2)}
+              €
+            </span>
+          )}
+        </div>
+      </div>
 
       <div style={boxStyle}>
-        {list.map((entry, index) => {
-          const { extraPrice } = entry;
-          const props = {
-            ...entry,
-            extraPrice: extraPrice || defaultExtraPrice,
-            onChange: handleChange,
-          };
+        {list.map((entry: Item, index) => {
+          const { extraPrice, ...props } = entry;
 
-          return <Choice key={index} {...props} />;
+          return (
+            <Choice
+              key={index}
+              {...props}
+              value={selected.items.get(index)}
+              extraPrice={extraPrice || defaultExtraPrice}
+              onChange={(q, d) => handleChange(index, q, d)}
+            />
+          );
         })}
       </div>
     </Box>
