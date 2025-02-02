@@ -9,13 +9,11 @@ export type ChoicesList = {
   extra: number[];
 };
 
-export type ChoicesProps = {
+export const Choices = (inProps: {
   data: Choice;
   max?: number;
   onChange?: (list: ChoicesList) => void;
-};
-
-export const Choices = (inProps: ChoicesProps) => {
+}) => {
   const { data, max, onChange } = inProps;
   const { label, extraPrice: defaultExtraPrice, list } = data;
   const allowExtra = max && defaultExtraPrice && defaultExtraPrice > 0;
@@ -31,7 +29,7 @@ export const Choices = (inProps: ChoicesProps) => {
     gap: '1rem',
   };
 
-  function getList(): ChoicesList {
+  function getList() {
     const entries = [...selected.items.entries()];
     const selectedList = [];
 

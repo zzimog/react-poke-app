@@ -2,25 +2,13 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-
-export type ChoiceProps = Item & {
-  value?: number;
-  min?: number;
-  max?: number;
-  extraQta?: number;
-  onChange?: (qta: number, diff: 1 | -1, prev: number) => void;
-};
+import Card from '@ui/Card';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 9;
 
-const ChoiceRoot = styled.div({
-  display: 'flex',
+export const ChoiceRoot = styled(Card)({
   flexDirection: 'column',
-  borderRadius: '0.375rem',
-  overflow: 'hidden',
-  background: '#ffebee',
-  boxShadow: '0 0 10px #eeeeee',
 
   [`&.--selected`]: {
     //
@@ -39,7 +27,7 @@ const ChoiceRoot = styled.div({
     padding: '0.5rem',
 
     [`&-name, &-extra`]: {
-      fontWeight: 600,
+      fontWeight: 800,
       textAlign: 'center',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
@@ -64,7 +52,7 @@ const ChoiceRoot = styled.div({
     alignItems: 'center',
 
     [`.qta`]: {
-      fontWeight: 600,
+      fontWeight: 400,
       userSelect: 'none',
     },
 
@@ -88,7 +76,15 @@ const ChoiceRoot = styled.div({
   },
 });
 
-export const Choice = (inProps: ChoiceProps) => {
+export const Choice = (
+  inProps: Item & {
+    value?: number;
+    min?: number;
+    max?: number;
+    extraQta?: number;
+    onChange?: (qta: number, diff: 1 | -1, prev: number) => void;
+  }
+) => {
   const {
     id,
     label,
@@ -124,7 +120,9 @@ export const Choice = (inProps: ChoiceProps) => {
       </div>
 
       <div className="info">
-        <div className="info-name">{label.toUpperCase()}</div>
+        <div className="info-name">
+          <span>{label.toUpperCase()}</span>
+        </div>
 
         {extraPrice > 0 && (
           <div className="info-extra">

@@ -9,7 +9,7 @@
 body {
   min-width: 320px;
   min-height: 100vh;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter Variable', sans-serif;
 }
 
 button,
@@ -30,4 +30,9 @@ button {
 
 img {
   max-width: 100%;
+}
+
+ul,
+ol {
+  list-style: none;
 }

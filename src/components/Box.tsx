@@ -10,7 +10,6 @@ const BoxRoot = styled.div({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
-  padding: '1rem',
 });
 
 const Box = (inProps: BoxProps) => {
