@@ -19,7 +19,7 @@ export const ChoiceRoot = styled(Card)({
     height: 120,
 
     [`&-container`]: {
-      margin: '0.5rem auto 0',
+      margin: '0 auto',
     },
   },
 
@@ -27,16 +27,19 @@ export const ChoiceRoot = styled(Card)({
     padding: '0.5rem',
 
     [`&-name, &-extra`]: {
-      fontWeight: 800,
       textAlign: 'center',
       overflow: 'hidden',
       textOverflow: 'ellipsis',
       whiteSpace: 'nowrap',
     },
 
+    [`&-name`]: {
+      fontWeight: 800,
+    },
+
     [`&-extra`]: {
-      height: 0,
       overflow: 'visible',
+      fontWeight: 600,
       fontSize: '0.8rem',
       color: '#d50000',
 
@@ -115,9 +118,11 @@ export const Choice = (
         '--selected': qta > 0,
       })}
     >
-      <div className="image-container">
-        <img className="image" src={image} alt={label} />
-      </div>
+      {image && (
+        <div className="image-container">
+          <img className="image" src={image} alt={label} />
+        </div>
+      )}
 
       <div className="info">
         <div className="info-name">

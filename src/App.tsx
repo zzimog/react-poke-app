@@ -34,11 +34,11 @@ const App = () => {
         maxWidth: '1280px',
         marginLeft: 'auto',
         marginRight: 'auto',
-        padding: '1rem',
+        padding: '1rem 0',
         background: '#fff',
       })}
     >
-      <SizeSelector data={data.sizes} />
+      <SizeSelector data={data.sizes} selected={1} />
 
       <div
         css={css({

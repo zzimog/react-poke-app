@@ -1,18 +1,25 @@
-import styled from '@emotion/styled';
 import { useState } from 'react';
+import styled from '@emotion/styled';
 import clsx from 'clsx';
 import Card from '@ui/Card';
 
+const mediaQuery = (bp: number) => `@media (min-width: ${bp}px)`;
+
 const SizesRoot = styled.div({
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(max(100px, 100%/4), 1fr))',
+  gridTemplateColumns: '1fr 1fr 1fr',
   gap: '1rem',
+  padding: '0 1rem',
 });
 
 const SizeRoot = styled(Card)({
-  flexDirection: 'row',
-  alignItems: 'center',
+  flexDirection: 'column',
   cursor: 'pointer',
+
+  [mediaQuery(992)]: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 
   [`&.--selected`]: {
     outline: '3px solid #ef5350',
@@ -23,9 +30,10 @@ const SizeRoot = styled(Card)({
     justifyContent: 'center',
     alignItems: 'center',
     flex: '0 0 128px',
-    height: '128px',
 
     [`.image`]: {
+      width: '128px',
+      height: '128px',
       color: '#b71c1c',
       fontSize: '96px',
       fontWeight: 900,
@@ -35,6 +43,10 @@ const SizeRoot = styled(Card)({
   [`& .info`]: {
     padding: '1rem',
     flex: '1 1 auto',
+
+    [mediaQuery(992)]: {
+      paddingLeft: 0,
+    },
 
     [`&-name`]: {
       fontWeight: 800,
@@ -46,17 +58,22 @@ const SizeRoot = styled(Card)({
       fontWeight: 300,
     },
 
-    [`&-list li`]: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
+    [`&-list`]: {
+      marginTop: '1rem',
 
-      [`&::before`]: {
-        content: '""',
-        display: 'block',
-        background: '#ef5350',
-        width: '0.5rem',
-        height: '0.5rem',
+      [`li`]: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.5rem',
+        whiteSpace: 'nowrap',
+
+        [`&::before`]: {
+          content: '""',
+          display: 'block',
+          background: '#ef5350',
+          width: '0.5rem',
+          height: '0.5rem',
+        },
       },
     },
   },
@@ -84,6 +101,8 @@ export const SizeSelector = (inProps: {
         const { size, label, price } = _size;
         const { bases, proteins, sides, crunch, sauces } = _size.content;
 
+        const imageScale = size === 'l' ? 1 : size === 'm' ? 0.8 : 0.6;
+
         function format(value: number, singular: string, plural: string) {
           return `${value} ${value > 1 ? plural : singular}`;
         }
@@ -95,9 +114,14 @@ export const SizeSelector = (inProps: {
               '--selected': index === selected,
             })}
             onClick={() => handleChange(index)}
+            data-size={size}
           >
             <div className="image-container">
-              <span className="image">{size.toUpperCase()}</span>
+              <img
+                style={{ transform: `scale(${imageScale})` }}
+                className="image"
+                src="./assets/poke.png"
+              />
             </div>
 
             <div className="info">

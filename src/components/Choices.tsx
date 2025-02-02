@@ -1,4 +1,5 @@
 import { CSSProperties, useState } from 'react';
+import { css } from '@emotion/react';
 import capitalize from '@ui/capitalize';
 import Box from './Box';
 import Choice from './Choice';
@@ -27,6 +28,7 @@ export const Choices = (inProps: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(max(150px, 100%/5), 1fr))',
     gap: '1rem',
+    padding: '0 1rem',
   };
 
   function getList() {
@@ -86,7 +88,15 @@ export const Choices = (inProps: {
 
   return (
     <Box>
-      <div className="title">
+      <div
+        className="title"
+        css={css({
+          position: 'sticky',
+          top: 0,
+          background: '#fff',
+          padding: '1rem',
+        })}
+      >
         <h1>{capitalize(label)}</h1>
 
         <div className="title-extra">
