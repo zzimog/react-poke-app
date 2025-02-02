@@ -1,0 +1,153 @@
+{
+  "sizes": [
+    {
+      "size": "s",
+      "label": "small",
+      "image": "./assets/poke.png",
+      "price": 8.9,
+      "content": {
+        "bases": 1,
+        "proteins": 1,
+        "sides": 3,
+        "crunch": 1,
+        "sauces": 1
+      }
+    },
+    {
+      "size": "m",
+      "label": "medium",
+      "image": "./assets/poke.png",
+      "price": 9.9,
+      "content": {
+        "bases": 2,
+        "proteins": 2,
+        "sides": 4,
+        "crunch": 2,
+        "sauces": 2
+      }
+    },
+    {
+      "size": "l",
+      "label": "large",
+      "image": "./assets/poke.png",
+      "price": 11.9,
+      "content": {
+        "bases": 2,
+        "proteins": 3,
+        "sides": 5,
+        "crunch": 3,
+        "sauces": 2
+      }
+    }
+  ],
+  "choices": {
+    "bases": {
+      "label": "base",
+      "list": [
+        {
+          "id": "riceWhite",
+          "label": "riso bianco",
+          "image": "./assets/bases/rice_white.png"
+        },
+        {
+          "id": "riceVenus",
+          "label": "riso venere",
+          "image": "./assets/bases/rice_venus.png"
+        },
+        {
+          "id": "emmer",
+          "label": "farro",
+          "image": "./assets/bases/emmer.png"
+        },
+        {
+          "id": "salad",
+          "label": "insalata",
+          "image": "./assets/bases/salad.png"
+        }
+      ]
+    },
+    "proteins": {
+      "label": "proteine",
+      "extraPrice": 1.5,
+      "list": [
+        {
+          "id": "salmonRaw",
+          "label": "salmone crudo",
+          "image": "./assets/proteins/salmon_raw.png",
+          "extraPrice": 2.0
+        },
+        {
+          "id": "tunaRaw",
+          "label": "tonno crudo",
+          "image": "./assets/proteins/tuna_raw.png",
+          "extraPrice": 2.0
+        },
+        {
+          "id": "salmonCooked",
+          "label": "salmone cotto",
+          "image": "./assets/proteins/salmon_cooked.png"
+        },
+        {
+          "id": "tempura",
+          "label": "gamberi in tempura",
+          "image": "./assets/proteins/tempura.png"
+        }
+      ]
+    },
+    "sauces": {
+      "label": "salse",
+      "list": [
+        {
+          "id": "agro",
+          "label": "agrodolce",
+          "image": "./assets/sauces/agro.png"
+        },
+        {
+          "id": "mango",
+          "label": "salsa al mango",
+          "image": "./assets/sauces/mango.png"
+        },
+        {
+          "id": "mayo",
+          "label": "maionese",
+          "image": "./assets/sauces/mayo.png"
+        },
+        {
+          "id": "mayoSpicy",
+          "label": "Maionese spicy",
+          "image": "./assets/sauces/mayo_spicy.png"
+        },
+        {
+          "id": "oliveOil",
+          "label": "olio d'oliva",
+          "image": "./assets/sauces/olive_oil.png"
+        },
+        {
+          "id": "ponzu",
+          "label": "salsa ponzu",
+          "image": "./assets/sauces/ponzu.png"
+        },
+        {
+          "id": "sesame",
+          "label": "salsa al sesamo",
+          "image": "./assets/sauces/sesame.png"
+        },
+        {
+          "id": "soy",
+          "label": "salsa di soia",
+          "image": "./assets/sauces/soy.png"
+        },
+        {
+          "id": "spicy",
+          "label": "salsa piccante",
+          "image": "./assets/sauces/spicy.png"
+        },
+        {
+          "id": "teriyaki",
+          "label": "salsa teriyaki",
+          "image": "./assets/sauces/teriyaki.png"
+        }
+      ]
+    }
+  }
+}
