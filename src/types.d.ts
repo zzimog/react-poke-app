@@ -28,6 +28,6 @@ type Item = {
 type Data = {
   sizes: Size[];
   choices: {
-    [key in keyof Size['content']]: Choice;
+    [key in keyof Size['content'] as string]: Choice;
   };
 };

@@ -94,6 +94,15 @@
         }
       ]
     },
+    "sides": {
+      "label": "condimenti",
+      "extraPrice": 1.5,
+      "list": []
+    },
+    "crunch": {
+      "label": "croccanti",
+      "list": []
+    },
     "sauces": {
       "label": "salse",
       "list": [

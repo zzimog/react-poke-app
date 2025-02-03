@@ -86,6 +86,10 @@ export const Choices = (inProps: {
     }
   }
 
+  if (list.length === 0) {
+    return null;
+  }
+
   return (
     <div>
       <div
