@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Loader from './components/Loader';
-import SizeSelector from './components/SizeSelector';
-import Configurator from './components/Configurator';
+import { Configurator, Selection } from './components/Configurator';
+import Sidebar from './components/Sidebar';
 
 const Root = styled.div({
   display: 'flex',
@@ -16,11 +16,7 @@ const Root = styled.div({
 
 const App = () => {
   const [data, setData] = useState<Data | undefined>();
-  const [size, setSize] = useState(1);
-
-  function handleSizeChange(index: number) {
-    setSize(index);
-  }
+  const [selection, setSelection] = useState<Selection>(new Map());
 
   useEffect(() => {
     // simulate network throttling for loading
@@ -42,12 +38,15 @@ const App = () => {
 
   return (
     <Root>
-      <SizeSelector
-        data={data.sizes}
-        selected={size}
-        onChange={handleSizeChange}
+      <Sidebar>
+        <pre>{JSON.stringify(selection.values(), null, '  ')}</pre>
+      </Sidebar>
+
+      <Configurator
+        data={data}
+        defaultSize={1}
+        onChange={(s) => setSelection(s)}
       />
-      <Configurator data={data} size={size} />
     </Root>
   );
 };

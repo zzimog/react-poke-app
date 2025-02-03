@@ -1,34 +1,59 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Choices, { ChoicesList } from './Choices';
+import SizeSelector from './SizeSelector';
 
-export const Configurator = (inProps: { data: Data; size: number }) => {
-  const { data, size = 0 } = inProps;
-  const selection = useRef(new Map<string, ChoicesList>());
+export type Selection = Map<string, ChoicesList>;
+
+export const Configurator = (inProps: {
+  data: Data;
+  defaultSize?: number;
+  onChange?: (value: Map<string, ChoicesList>) => void;
+}) => {
+  const { data, defaultSize = 0, onChange } = inProps;
+  const [size, setSize] = useState(defaultSize);
+  const selection = useRef<Map<string, ChoicesList>>(new Map());
 
   const { content } = data.sizes[size];
-  const currentContent = Object.entries(content);
+  const choices = Object.entries(content);
 
   function handleChoiceChange(choiceId: string, list: ChoicesList) {
-    selection.current.set(choiceId, list);
-    console.log(selection);
-  }
-
-  return currentContent.map(([content, max], index) => {
-    const choicesData = data.choices[content];
-
-    if (!choicesData) {
-      return null;
+    if (list.selected.size === 0) {
+      selection.current.delete(choiceId);
+    } else {
+      selection.current.set(choiceId, list);
     }
 
-    return (
-      <Choices
-        key={index}
-        max={max}
-        data={choicesData}
-        onChange={(list) => handleChoiceChange(content, list)}
+    if (onChange) {
+      onChange(selection.current);
+    }
+  }
+
+  return (
+    <div className="configurator">
+      <SizeSelector
+        data={data.sizes}
+        selected={size}
+        onChange={(i) => setSize(i)}
       />
-    );
-  });
+
+      {choices.map(([choice, max], index) => {
+        const choicesData = data.choices[choice];
+
+        if (!choicesData) {
+          return null;
+        }
+
+        return (
+          <Choices
+            key={index}
+            max={max}
+            data={choicesData}
+            onChange={(list) => handleChoiceChange(choice, list)}
+          />
+        );
+      })}
+    </div>
+  );
 };
 
 export default Configurator;

@@ -4,8 +4,10 @@ import { css } from '@emotion/react';
 import capitalize from '@ui/capitalize';
 import Choice from './Choice';
 
+export type SelectedMap = Map<number, number>;
+
 export type ChoicesList = {
-  selected: Map<number, number>;
+  selected: SelectedMap;
   items: number[];
   extra: number[];
 };
@@ -26,13 +28,14 @@ export const Choices = (inProps: {
   const { label, extraPrice: defaultExtraPrice, list } = data;
   const allowExtra = max && defaultExtraPrice && defaultExtraPrice > 0;
 
-  const [selected, setSelected] = useState({
-    items: new Map<number, number>(),
-    total: 0,
-  });
+  const [selected, setSelected] = useState<SelectedMap>(new Map());
 
-  function getList() {
-    const entries = [...selected.items.entries()];
+  function getTotal() {
+    return [...selected.values()].reduce((s, q) => s + q, 0);
+  }
+
+  function getList(selected: SelectedMap) {
+    const entries = [...selected.entries()];
     const selectedList = [];
 
     // explode map
@@ -53,15 +56,15 @@ export const Choices = (inProps: {
     });
 
     return {
-      selected: selected.items,
+      selected: selected,
       items: max ? sorted.slice(0, max) : sorted,
       extra: max ? sorted.slice(max) : [],
     };
   }
 
   function handleChange(index: number, qta: number, diff: 1 | -1) {
-    const newItems = new Map(selected.items);
-    const newTotal = selected.total + diff;
+    const newItems = new Map(selected);
+    const newTotal = getTotal() + diff;
 
     if (max && !allowExtra) {
       if (newTotal > max || newTotal < 0) {
@@ -75,13 +78,10 @@ export const Choices = (inProps: {
       newItems.set(index, qta);
     }
 
-    setSelected({
-      items: newItems,
-      total: newTotal,
-    });
+    setSelected(newItems);
 
     if (onChange) {
-      const list = getList();
+      const list = getList(newItems);
       onChange(list);
     }
   }
@@ -101,11 +101,11 @@ export const Choices = (inProps: {
         <h1>{capitalize(label)}</h1>
 
         <div className="title-extra">
-          {max && `${selected.total}/${max}`}
-          {max && selected.total > max && (
+          {max && `${getTotal()}/${max}`}
+          {max && getTotal() > max && (
             <span>
               +
-              {getList()
+              {getList(selected)
                 .extra.reduce((sum, idx) => {
                   const price = list[idx].extraPrice || defaultExtraPrice || 0;
                   return sum + price;
@@ -125,7 +125,7 @@ export const Choices = (inProps: {
             <Choice
               key={index}
               {...props}
-              value={selected.items.get(index)}
+              value={selected.get(index)}
               extraPrice={extraPrice || defaultExtraPrice}
               onChange={(q, d) => handleChange(index, q, d)}
             />
