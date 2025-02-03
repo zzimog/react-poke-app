@@ -9,6 +9,7 @@ const MAX_VALUE = 9;
 
 export const ChoiceRoot = styled(Card)({
   flexDirection: 'column',
+  userSelect: 'none',
 
   [`&.--selected`]: {
     //
@@ -16,7 +17,8 @@ export const ChoiceRoot = styled(Card)({
 
   [`.image`]: {
     display: 'block',
-    height: 120,
+    height: 128,
+    objectFit: 'contain',
 
     [`&-container`]: {
       margin: '0 auto',

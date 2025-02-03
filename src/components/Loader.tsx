@@ -11,16 +11,16 @@ const rotate = keyframes`
   }
 `;
 
-const Circle = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4rem;
-  height: 4rem;
-  border: 5px solid black;
-  border-top-color: transparent;
-  border-radius: 50%;
-`;
+const Circle = styled.div({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  width: '4rem',
+  height: '4rem',
+  border: '5px solid #d50000',
+  borderTopColor: 'transparent',
+  borderRadius: '50%',
+});
 
 const Loader = () => {
   return (

@@ -1,3 +1,7 @@
+:root {
+  --color-bg: #ffebee;
+}
+
 *,
 *::before,
 *::after {
@@ -10,6 +14,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: 'Inter Variable', sans-serif;
+  background: var(--color-bg);
 }
 
 button,

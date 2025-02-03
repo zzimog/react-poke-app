@@ -91,9 +91,6 @@ export const Choices = (inProps: {
       <div
         className="title"
         css={css({
-          position: 'sticky',
-          top: 0,
-          background: '#fff',
           padding: '1rem',
         })}
       >

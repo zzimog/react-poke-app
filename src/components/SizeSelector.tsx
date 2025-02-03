@@ -1,22 +1,33 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Card from '@ui/Card';
-
-const mediaQuery = (bp: number) => `@media (min-width: ${bp}px)`;
+import mediaQuery from '@ui/mediaQuery';
 
 const SizesRoot = styled.div({
   display: 'grid',
-  gridTemplateColumns: '1fr 1fr 1fr',
+  gridTemplateColumns: '1fr',
   gap: '1rem',
   padding: '0 1rem',
+
+  [mediaQuery('sm')]: {
+    gridTemplateColumns: '1fr 1fr 1fr',
+  },
 });
 
 const SizeRoot = styled(Card)({
-  flexDirection: 'column',
+  flexDirection: 'row',
+  alignItems: 'center',
+  gap: '1rem',
+  padding: '1rem',
   cursor: 'pointer',
 
-  [mediaQuery(992)]: {
+  [mediaQuery('sm')]: {
+    flexDirection: 'column',
+  },
+
+  [mediaQuery('lg')]: {
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -29,22 +40,19 @@ const SizeRoot = styled(Card)({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
     flex: '0 0 128px',
 
     [`.image`]: {
-      width: '128px',
-      height: '128px',
-      color: '#b71c1c',
-      fontSize: '96px',
-      fontWeight: 900,
+      objectFit: 'contain',
+      userSelect: 'none',
     },
   },
 
   [`& .info`]: {
-    padding: '1rem',
     flex: '1 1 auto',
 
-    [mediaQuery(992)]: {
+    [mediaQuery('lg')]: {
       paddingLeft: 0,
     },
 
@@ -101,7 +109,7 @@ export const SizeSelector = (inProps: {
         const { size, label, price } = _size;
         const { bases, proteins, sides, crunch, sauces } = _size.content;
 
-        const imageScale = size === 'l' ? 1 : size === 'm' ? 0.8 : 0.6;
+        const imageSize = size === 'l' ? 128 : size === 'm' ? 112 : 96;
 
         function format(value: number, singular: string, plural: string) {
           return `${value} ${value > 1 ? plural : singular}`;
@@ -118,7 +126,10 @@ export const SizeSelector = (inProps: {
           >
             <div className="image-container">
               <img
-                style={{ transform: `scale(${imageScale})` }}
+                css={css({
+                  width: imageSize,
+                  height: imageSize,
+                })}
                 className="image"
                 src="./assets/poke.png"
               />

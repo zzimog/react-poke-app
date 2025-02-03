@@ -35,7 +35,6 @@ const App = () => {
         marginLeft: 'auto',
         marginRight: 'auto',
         padding: '1rem 0',
-        background: '#fff',
       })}
     >
       <SizeSelector data={data.sizes} selected={1} />
