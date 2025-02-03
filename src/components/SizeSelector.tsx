@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
@@ -92,14 +91,17 @@ export const SizeSelector = (inProps: {
   selected?: number;
   onChange?: (index: number) => void;
 }) => {
-  const { data = [], selected: initSelected = 0, onChange } = inProps;
-  const [selected, setSelected] = useState(initSelected);
+  const { data = [], selected = 0, onChange } = inProps;
+
+  const imageSize = {
+    s: 96,
+    m: 112,
+    l: 128,
+  };
 
   function handleChange(index: number) {
-    setSelected(index);
-
     if (onChange) {
-      onChange(selected);
+      onChange(index);
     }
   }
 
@@ -108,8 +110,6 @@ export const SizeSelector = (inProps: {
       {data.map((_size, index) => {
         const { size, label, price } = _size;
         const { bases, proteins, sides, crunch, sauces } = _size.content;
-
-        const imageSize = size === 'l' ? 128 : size === 'm' ? 112 : 96;
 
         function format(value: number, singular: string, plural: string) {
           return `${value} ${value > 1 ? plural : singular}`;
@@ -127,8 +127,8 @@ export const SizeSelector = (inProps: {
             <div className="image-container">
               <img
                 css={css({
-                  width: imageSize,
-                  height: imageSize,
+                  width: imageSize[size],
+                  height: imageSize[size],
                 })}
                 className="image"
                 src="./assets/poke.png"
