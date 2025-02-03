@@ -1,7 +1,7 @@
-import { CSSProperties, useState } from 'react';
+import { useState } from 'react';
+import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import capitalize from '@ui/capitalize';
-import Box from './Box';
 import Choice from './Choice';
 
 export type ChoicesList = {
@@ -9,6 +9,13 @@ export type ChoicesList = {
   items: number[];
   extra: number[];
 };
+
+const Grid = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(max(150px, 100%/5), 1fr))',
+  gap: '1rem',
+  padding: '0 1rem',
+});
 
 export const Choices = (inProps: {
   data: Choice;
@@ -23,13 +30,6 @@ export const Choices = (inProps: {
     items: new Map<number, number>(),
     total: 0,
   });
-
-  const boxStyle: CSSProperties = {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(max(150px, 100%/5), 1fr))',
-    gap: '1rem',
-    padding: '0 1rem',
-  };
 
   function getList() {
     const entries = [...selected.items.entries()];
@@ -87,7 +87,7 @@ export const Choices = (inProps: {
   }
 
   return (
-    <Box>
+    <div>
       <div
         className="title"
         css={css({
@@ -113,7 +113,7 @@ export const Choices = (inProps: {
         </div>
       </div>
 
-      <div style={boxStyle}>
+      <Grid>
         {list.map((entry: Item, index) => {
           const { extraPrice, ...props } = entry;
 
@@ -127,8 +127,8 @@ export const Choices = (inProps: {
             />
           );
         })}
-      </div>
-    </Box>
+      </Grid>
+    </div>
   );
 };
 

@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react';
-import { css } from '@emotion/react';
+import styled from '@emotion/styled';
 import Loader from './components/Loader';
 import SizeSelector from './components/SizeSelector';
 import Configurator from './components/Configurator';
+
+const Root = styled.div({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  maxWidth: '1280px',
+  marginLeft: 'auto',
+  marginRight: 'auto',
+  padding: '1rem 0',
+});
 
 const App = () => {
   const [data, setData] = useState<Data | undefined>();
@@ -26,29 +36,10 @@ const App = () => {
   }
 
   return (
-    <div
-      css={css({
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1rem',
-        maxWidth: '1280px',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        padding: '1rem 0',
-      })}
-    >
+    <Root>
       <SizeSelector data={data.sizes} selected={1} />
-
-      <div
-        css={css({
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-        })}
-      >
-        <Configurator data={data} />
-      </div>
-    </div>
+      <Configurator data={data} />
+    </Root>
   );
 };
 
