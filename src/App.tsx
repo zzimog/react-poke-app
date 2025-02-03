@@ -16,6 +16,11 @@ const Root = styled.div({
 
 const App = () => {
   const [data, setData] = useState<Data | undefined>();
+  const [size, setSize] = useState(1);
+
+  function handleSizeChange(index: number) {
+    setSize(index);
+  }
 
   useEffect(() => {
     // simulate network throttling for loading
@@ -37,8 +42,12 @@ const App = () => {
 
   return (
     <Root>
-      <SizeSelector data={data.sizes} selected={1} />
-      <Configurator data={data} />
+      <SizeSelector
+        data={data.sizes}
+        selected={size}
+        onChange={handleSizeChange}
+      />
+      <Configurator data={data} size={size} />
     </Root>
   );
 };
