@@ -1,20 +1,27 @@
-import { useRef, useState } from 'react';
-import Choices, { ChoicesList } from './Choices';
+import { useId, useRef, useState } from 'react';
+import styled from '@emotion/styled';
 import SizeSelector from './SizeSelector';
+import Choices, { ChoicesList } from './Choices';
 
 export type Selection = Map<string, ChoicesList>;
+
+const ConfiguratorRoot = styled.div({
+  padding: '1rem',
+});
 
 export const Configurator = (inProps: {
   data: Data;
   defaultSize?: number;
-  onChange?: (value: Map<string, ChoicesList>) => void;
+  onConfirm?: (selection: Map<string, ChoicesList>) => void;
 }) => {
-  const { data, defaultSize = 0, onChange } = inProps;
+  const rootId = useId() + 'configurator';
+  const { data, defaultSize = 0, onConfirm } = inProps;
+
   const [size, setSize] = useState(defaultSize);
   const selection = useRef<Map<string, ChoicesList>>(new Map());
 
-  const { content } = data.sizes[size];
-  const choices = Object.entries(content);
+  const maxes = data.sizes[size].content;
+  const choices = Object.entries(maxes);
 
   function handleChoiceChange(choiceId: string, list: ChoicesList) {
     if (list.selected.size === 0) {
@@ -22,14 +29,18 @@ export const Configurator = (inProps: {
     } else {
       selection.current.set(choiceId, list);
     }
+  }
 
-    if (onChange) {
-      onChange(selection.current);
+  function handleConfirm() {
+    if (onConfirm) {
+      onConfirm(selection.current);
     }
   }
 
   return (
-    <div className="configurator">
+    <ConfiguratorRoot id={rootId}>
+      <h1>Configurator</h1>
+
       <SizeSelector
         data={data.sizes}
         selected={size}
@@ -39,11 +50,7 @@ export const Configurator = (inProps: {
       {choices.map(([choice, max], index) => {
         const choicesData = data.choices[choice];
 
-        if (!choicesData) {
-          return null;
-        }
-
-        return (
+        return !choicesData ? null : (
           <Choices
             key={index}
             max={max}
@@ -52,7 +59,11 @@ export const Configurator = (inProps: {
           />
         );
       })}
-    </div>
+
+      <button onClick={handleConfirm}>
+        <span>Conferma</span>
+      </button>
+    </ConfiguratorRoot>
   );
 };
 

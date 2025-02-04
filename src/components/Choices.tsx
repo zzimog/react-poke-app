@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 import capitalize from '@ui/utilities/capitalize';
 import Choice from './Choice';
+import { Flex } from '@/ui';
 
 export type SelectedMap = Map<number, number>;
 
@@ -12,11 +12,11 @@ export type ChoicesList = {
   extra: number[];
 };
 
-const Grid = styled.div({
+const Grid = styled(Flex)({
   display: 'grid',
-  gridTemplateColumns: 'repeat(auto-fit, minmax(max(150px, 100%/5), 1fr))',
+  gridTemplateColumns:
+    'repeat(auto-fit, minmax(max(150px, calc(25% - 1rem)), 1fr))',
   gap: '1rem',
-  padding: '0 1rem',
 });
 
 export const Choices = (inProps: {
@@ -72,7 +72,7 @@ export const Choices = (inProps: {
       }
     }
 
-    if (!qta || qta === 0) {
+    if (!qta || qta == 0) {
       newItems.delete(index);
     } else {
       newItems.set(index, qta);
@@ -86,18 +86,9 @@ export const Choices = (inProps: {
     }
   }
 
-  if (list.length === 0) {
-    return null;
-  }
-
-  return (
+  return list.length == 0 ? null : (
     <div>
-      <div
-        className="title"
-        css={css({
-          padding: '1rem',
-        })}
-      >
+      <div className="title">
         <h1>{capitalize(label)}</h1>
 
         <div className="title-extra">

@@ -45,7 +45,10 @@ const App = () => {
       <Configurator
         data={data}
         defaultSize={1}
-        onChange={(s) => setSelection(s)}
+        onConfirm={(s) => {
+          console.log(s);
+          setSelection(s);
+        }}
       />
     </Root>
   );

@@ -8,7 +8,6 @@ const SizesRoot = styled.div({
   display: 'grid',
   gridTemplateColumns: '1fr',
   gap: '1rem',
-  padding: '0 1rem',
 
   [mediaQuery('sm')]: {
     gridTemplateColumns: '1fr 1fr 1fr',
@@ -19,7 +18,6 @@ const SizeRoot = styled(Card)({
   flexDirection: 'row',
   alignItems: 'center',
   gap: '1rem',
-  padding: '1rem',
   cursor: 'pointer',
 
   [mediaQuery('sm')]: {

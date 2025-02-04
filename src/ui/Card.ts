@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 
 export const Card = styled.div({
   display: 'flex',
+  padding: '0.5rem',
   borderRadius: '0.375rem',
   overflow: 'hidden',
   background: '#ffffff',

@@ -15,18 +15,24 @@ export const ChoiceRoot = styled(Card)({
     //
   },
 
+  ['*']: {
+    padding: '2px',
+    outline: '1px dotted red',
+  },
+
   [`.image`]: {
-    display: 'block',
-    height: 128,
     objectFit: 'contain',
 
     [`&-container`]: {
+      width: 128,
+      height: 128,
       margin: '0 auto',
     },
   },
 
   [`.info`]: {
     padding: '0.5rem',
+    flex: '1 0 auto',
 
     [`&-name, &-extra`]: {
       textAlign: 'center',
@@ -64,9 +70,8 @@ export const ChoiceRoot = styled(Card)({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '3rem',
-      height: '3rem',
-      margin: '0.5rem',
+      width: '2rem',
+      height: '2rem',
       borderRadius: '50%',
       background: 'none',
       border: 0,
