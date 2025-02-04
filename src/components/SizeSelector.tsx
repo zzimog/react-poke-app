@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { css } from '@emotion/react';
 import clsx from 'clsx';
 import Card from '@ui/Card';
-import mediaQuery from '@ui/mediaQuery';
+import mediaQuery from '@ui/utilities/mediaQuery';
 
 const SizesRoot = styled.div({
   display: 'grid',

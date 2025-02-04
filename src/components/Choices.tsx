@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { css } from '@emotion/react';
-import capitalize from '@ui/capitalize';
+import capitalize from '@ui/utilities/capitalize';
 import Choice from './Choice';
 
 export type SelectedMap = Map<number, number>;
@@ -118,19 +118,15 @@ export const Choices = (inProps: {
       </div>
 
       <Grid>
-        {list.map((entry: Item, index) => {
-          const { extraPrice, ...props } = entry;
-
-          return (
-            <Choice
-              key={index}
-              {...props}
-              value={selected.get(index)}
-              extraPrice={extraPrice || defaultExtraPrice}
-              onChange={(q, d) => handleChange(index, q, d)}
-            />
-          );
-        })}
+        {list.map(({ extraPrice, ...props }: Item, index) => (
+          <Choice
+            key={index}
+            {...props}
+            value={selected.get(index)}
+            extraPrice={extraPrice || defaultExtraPrice}
+            onChange={(q, d) => handleChange(index, q, d)}
+          />
+        ))}
       </Grid>
     </div>
   );

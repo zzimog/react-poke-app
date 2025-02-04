@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import Card from '@ui/Card';
+import { Card, Flex } from '@/ui';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 9;
@@ -51,8 +51,7 @@ export const ChoiceRoot = styled(Card)({
     },
   },
 
-  [`.qta-container`]: {
-    display: 'flex',
+  [`${Flex}`]: {
     justifyContent: 'space-between',
     alignItems: 'center',
 
@@ -138,7 +137,7 @@ export const Choice = (
         )}
       </div>
 
-      <div className="qta-container">
+      <Flex direction="row">
         <button className="button" onClick={() => editQta(-1)}>
           <FontAwesomeIcon icon={faMinus} />
         </button>
@@ -148,7 +147,7 @@ export const Choice = (
         <button className="button" onClick={() => editQta(+1)}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
-      </div>
+      </Flex>
     </ChoiceRoot>
   );
 };
