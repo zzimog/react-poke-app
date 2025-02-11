@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import Loader from './components/Loader';
-import { Configurator, Selection } from './components/Configurator';
-import Sidebar from './components/Sidebar';
+import Composer from './components/composer/Composer';
 
 const Root = styled.div({
   display: 'flex',
@@ -16,7 +15,6 @@ const Root = styled.div({
 
 const App = () => {
   const [data, setData] = useState<Data | undefined>();
-  const [selection, setSelection] = useState<Selection>(new Map());
 
   useEffect(() => {
     // simulate network throttling for loading
@@ -25,7 +23,7 @@ const App = () => {
       const json = await resp.json();
 
       setData(json);
-    }, 2000);
+    }, 800);
 
     return () => {
       clearTimeout(timer);
@@ -38,18 +36,7 @@ const App = () => {
 
   return (
     <Root>
-      <Sidebar>
-        <pre>{JSON.stringify(selection.values(), null, '  ')}</pre>
-      </Sidebar>
-
-      <Configurator
-        data={data}
-        defaultSize={1}
-        onConfirm={(s) => {
-          console.log(s);
-          setSelection(s);
-        }}
-      />
+      <Composer data={data} />
     </Root>
   );
 };

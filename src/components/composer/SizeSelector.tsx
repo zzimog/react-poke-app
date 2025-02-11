@@ -85,11 +85,11 @@ const SizeRoot = styled(Card)({
 });
 
 export const SizeSelector = (inProps: {
-  data?: Size[];
+  sizes?: Size[];
   selected?: number;
   onChange?: (index: number) => void;
 }) => {
-  const { data = [], selected = 0, onChange } = inProps;
+  const { sizes = [], selected = 0, onChange } = inProps;
 
   const imageSize = {
     s: 96,
@@ -105,9 +105,9 @@ export const SizeSelector = (inProps: {
 
   return (
     <SizesRoot>
-      {data.map((_size, index) => {
-        const { size, label, price } = _size;
-        const { bases, proteins, sides, crunch, sauces } = _size.content;
+      {sizes.map((_size, index) => {
+        const { size, label, price, limits } = _size;
+        const { bases, proteins, sides, crunch, sauces } = limits;
 
         function format(value: number, singular: string, plural: string) {
           return `${value} ${value > 1 ? plural : singular}`;

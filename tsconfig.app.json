@@ -24,8 +24,9 @@
     "noUncheckedSideEffectImports": true,
 
     "paths": {
-      "@/*": ["./src/*"],
-      "@ui/*": ["./src/ui/*"]
+      "@ui": ["./src/ui/"],
+      "@ui/*": ["./src/ui/*"],
+      "@composer/*": ["./src/components/composer/*"]
     }
   },
   "include": ["**/*"]

@@ -2,12 +2,12 @@ import styled from '@emotion/styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
-import { Card, Flex } from '@/ui';
+import { Card, Flex } from '@ui';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 9;
 
-export const ChoiceRoot = styled(Card)({
+export const ItemRoot = styled(Card)({
   flexDirection: 'column',
   userSelect: 'none',
 
@@ -15,10 +15,12 @@ export const ChoiceRoot = styled(Card)({
     //
   },
 
+  /* debug
   ['*']: {
     padding: '2px',
     outline: '1px dotted red',
   },
+  */
 
   [`.image`]: {
     objectFit: 'contain',
@@ -85,13 +87,13 @@ export const ChoiceRoot = styled(Card)({
   },
 });
 
-export const Choice = (
+export const Item = (
   inProps: Item & {
     value?: number;
     min?: number;
     max?: number;
     extraQta?: number;
-    onChange?: (qta: number, diff: 1 | -1, prev: number) => void;
+    onChange?: (qta: number) => void;
   }
 ) => {
   const {
@@ -105,7 +107,7 @@ export const Choice = (
     onChange,
   } = inProps;
 
-  function editQta(diff: 1 | -1) {
+  function handleQtaChange(diff: 1 | -1) {
     const value = qta + diff;
 
     if (value < min || value > max) {
@@ -113,12 +115,12 @@ export const Choice = (
     }
 
     if (onChange) {
-      onChange(value, diff, qta);
+      onChange(value);
     }
   }
 
   return (
-    <ChoiceRoot
+    <ItemRoot
       key={id}
       className={clsx({
         '--selected': qta > 0,
@@ -143,18 +145,18 @@ export const Choice = (
       </div>
 
       <Flex direction="row">
-        <button className="button" onClick={() => editQta(-1)}>
+        <button className="button" onClick={() => handleQtaChange(-1)}>
           <FontAwesomeIcon icon={faMinus} />
         </button>
         <div className="qta">
           <span className="qta-value">{qta}</span>
         </div>
-        <button className="button" onClick={() => editQta(+1)}>
+        <button className="button" onClick={() => handleQtaChange(+1)}>
           <FontAwesomeIcon icon={faPlus} />
         </button>
       </Flex>
-    </ChoiceRoot>
+    </ItemRoot>
   );
 };
 
-export default Choice;
+export default Item;

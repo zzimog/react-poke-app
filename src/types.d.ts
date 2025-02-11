@@ -1,9 +1,11 @@
+type Key = React.Key;
+
 type Size = {
   size: 's' | 'm' | 'l';
   label: string;
   image: string;
   price: number;
-  content: {
+  limits: {
     bases: number;
     proteins: number;
     sides: number;
@@ -27,7 +29,7 @@ type Item = {
 
 type Data = {
   sizes: Size[];
-  choices: {
-    [key in keyof Size['content'] as string]: Choice;
+  categories: {
+    [key in keyof Size['limits'] as string]: Choice;
   };
 };
