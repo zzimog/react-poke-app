@@ -5,7 +5,7 @@
       "label": "small",
       "image": "./assets/poke.png",
       "price": 8.9,
-      "content": {
+      "limits": {
         "bases": 1,
         "proteins": 1,
         "sides": 3,
@@ -18,7 +18,7 @@
       "label": "medium",
       "image": "./assets/poke.png",
       "price": 9.9,
-      "content": {
+      "limits": {
         "bases": 2,
         "proteins": 2,
         "sides": 4,
@@ -31,7 +31,7 @@
       "label": "large",
       "image": "./assets/poke.png",
       "price": 11.9,
-      "content": {
+      "limits": {
         "bases": 2,
         "proteins": 3,
         "sides": 5,
@@ -40,7 +40,7 @@
       }
     }
   ],
-  "choices": {
+  "categories": {
     "bases": {
       "label": "base",
       "list": [
