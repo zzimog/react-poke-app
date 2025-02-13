@@ -1,4 +1,4 @@
-type Key = React.Key;
+type Key = string | number;
 
 type Size = {
   size: 's' | 'm' | 'l';
