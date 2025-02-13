@@ -16,6 +16,10 @@ const Root = styled.div({
 const App = () => {
   const [data, setData] = useState<Data | undefined>();
 
+  function handleSubmit(data: ComposerData) {
+    alert(JSON.stringify(data, null, '  '));
+  }
+
   useEffect(() => {
     // simulate network throttling for loading
     const timer = setTimeout(async () => {
@@ -36,7 +40,7 @@ const App = () => {
 
   return (
     <Root>
-      <Composer data={data} />
+      <Composer data={data} onSubmit={handleSubmit} />
     </Root>
   );
 };

@@ -3,8 +3,6 @@ import capitalize from '@ui/utilities/capitalize';
 import Item from './Item';
 import { Flex } from '@ui';
 
-export type SelectedMap = Map<number, number>;
-
 const Grid = styled(Flex)({
   display: 'grid',
   gridTemplateColumns:
@@ -12,24 +10,24 @@ const Grid = styled(Flex)({
   gap: '1rem',
 });
 
-export const Category = (inProps: {
+const Category = (inProps: {
   id: Key;
   items: Choice;
   max?: number;
-  selected?: SelectedMap;
+  selected?: MapItemQta;
   onChange?: (id: Key, index: number, qta: number) => void;
 }) => {
-  const { id, items, max, selected = new Map(), onChange } = inProps;
+  const { id, items, max, selected = {}, onChange } = inProps;
   const { label, extraPrice: defaultExtraPrice, list } = items;
 
-  const total = [...selected.values()].reduce((s, i) => s + i, 0);
+  const total = [...Object.values(selected)].reduce((s, i) => s + i, 0);
 
   function handleQtaChange(index: number, qta: number) {
     if (
       !defaultExtraPrice &&
       max &&
       total >= max &&
-      qta > (selected.get(index) || 0)
+      qta > (selected[index] || 0)
     ) {
       return;
     }
@@ -54,7 +52,7 @@ export const Category = (inProps: {
           <Item
             key={index}
             {...props}
-            value={selected.get(index)}
+            value={selected[index]}
             extraPrice={extraPrice || defaultExtraPrice}
             onChange={(q) => handleQtaChange(index, q)}
           />
