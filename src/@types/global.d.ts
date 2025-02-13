@@ -14,7 +14,7 @@ type Size = {
   };
 };
 
-type Choice = {
+type Category = {
   label: string;
   extraPrice?: number;
   list: Item[];
@@ -30,6 +30,6 @@ type Item = {
 type Data = {
   sizes: Size[];
   categories: {
-    [key in keyof Size['limits'] as string]: Choice;
+    [key in keyof Size['limits'] as string]: Category;
   };
 };

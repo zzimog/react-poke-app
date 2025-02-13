@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 import type { Property } from 'csstype';
 
-export type FlexProps = {
+const Flex = styled.div<{
   direction?: Property.FlexDirection;
-};
-
-export const Flex = styled.div<FlexProps>((props) => ({
+}>((props) => ({
   display: 'flex',
   flexDirection: props.direction || 'column',
   gap: '1rem',

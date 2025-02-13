@@ -1,15 +1,13 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
+import Wrapper from '@ui/Wrapper';
 import Loader from './components/Loader';
 import Composer from './components/composer/Composer';
 
-const Root = styled.div({
+const Root = styled(Wrapper)({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
-  maxWidth: '1280px',
-  marginLeft: 'auto',
-  marginRight: 'auto',
   padding: '1rem 0',
 });
 

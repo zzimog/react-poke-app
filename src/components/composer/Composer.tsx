@@ -2,10 +2,24 @@ import { useState } from 'react';
 import Category from './Category';
 import SizeSelector from './SizeSelector';
 import styled from '@emotion/styled';
-import { Flex } from '@ui';
+import { Flex, Wrapper } from '@ui';
 
 const ComposerRoot = styled(Flex)({
-  //
+  padding: '1rem',
+
+  [`& .summary`]: {
+    position: 'fixed',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: '#fff',
+
+    [`& ${Wrapper}`]: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      padding: '1rem',
+    },
+  },
 });
 
 const Composer = (inProps: {
@@ -23,7 +37,7 @@ const Composer = (inProps: {
   function handleQtaChange(id: Key, index: number, qta: number) {
     setSelected((prev) => {
       const selected = { ...prev };
-      const category = selected[id] || {};
+      const category = { ...selected[id] };
 
       if (qta > 0) {
         category[index] = qta;
@@ -74,9 +88,17 @@ const Composer = (inProps: {
         );
       })}
 
-      <button onClick={handleSubmit}>
-        <span>Conferma</span>
-      </button>
+      <div className="summary">
+        <Wrapper>
+          <div className="summary-price">
+            <h3>Totale: 0.00 €</h3>
+          </div>
+
+          <button onClick={handleSubmit}>
+            <h3>Conferma</h3>
+          </button>
+        </Wrapper>
+      </div>
     </ComposerRoot>
   );
 };
