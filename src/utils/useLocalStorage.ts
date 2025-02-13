@@ -4,18 +4,27 @@ export default function useLocalStorage(
   storageName: string,
   initValue: string = ''
 ): [value: string, setItem: (newValue: string) => void, clear: () => void] {
-  const [value, setValue] = useState(initValue);
+  const [value, setValue] = useState(() => {
+    const localItem = window.localStorage.getItem(storageName);
+    return localItem || initValue;
+  });
 
-  function setItem(newValue: string) {
-    setValue(newValue);
-    window.localStorage.setItem(storageName, newValue);
-    window.dispatchEvent(new Event('storage'));
+  function setItem(newValue: unknown) {
+    if (typeof newValue !== 'string') {
+      newValue = JSON.stringify(newValue);
+    }
+
+    if (newValue !== value) {
+      setValue(`${newValue}`);
+      window.localStorage.setItem(storageName, `${newValue}`);
+      window.dispatchEvent(new Event('localStorageChange'));
+    }
   }
 
   function clear() {
-    setValue('');
+    setValue(initValue);
     window.localStorage.removeItem(storageName);
-    window.dispatchEvent(new Event('storage'));
+    window.dispatchEvent(new Event('localStorageChange'));
   }
 
   function handleItem() {
@@ -27,11 +36,12 @@ export default function useLocalStorage(
   }
 
   useEffect(() => {
-    handleItem();
     window.addEventListener('storage', handleItem);
+    window.addEventListener('localStorageChange', handleItem);
 
     return () => {
       window.removeEventListener('storage', handleItem);
+      window.removeEventListener('localStorageChange', handleItem);
     };
   });
 
