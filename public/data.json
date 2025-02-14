@@ -105,6 +105,7 @@
     },
     "sauces": {
       "label": "salse",
+      "extraPrice": 0.5,
       "list": [
         {
           "id": "agro",
