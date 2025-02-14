@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import clsx from 'clsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
-import { Card, Flex } from '@ui';
+import { Card, Flex, Button } from '@ui';
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 9;
@@ -14,13 +14,6 @@ export const ItemRoot = styled(Card)({
   [`&.--selected`]: {
     //
   },
-
-  /* debug
-  ['*']: {
-    padding: '2px',
-    outline: '1px dotted red',
-  },
-  */
 
   [`.image`]: {
     objectFit: 'contain',
@@ -59,25 +52,20 @@ export const ItemRoot = styled(Card)({
     },
   },
 
-  [`${Flex}`]: {
+  [`& .qta`]: {
     justifyContent: 'space-between',
     alignItems: 'center',
 
-    [`.qta`]: {
+    [`&-value`]: {
       fontWeight: 400,
       userSelect: 'none',
     },
 
-    [`.button`]: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
+    [`&-btn`]: {
       width: '2rem',
       height: '2rem',
-      borderRadius: '50%',
+      color: '#000',
       background: 'none',
-      border: 0,
-      transition: 'all .125s ease-in-out',
 
       [`&:hover`]: {
         color: '#fff',
@@ -144,16 +132,18 @@ export const Item = (
         )}
       </div>
 
-      <Flex direction="row">
-        <button className="button" onClick={() => handleQtaChange(-1)}>
+      <Flex direction="row" className="qta">
+        <Button className="qta-btn" onClick={() => handleQtaChange(-1)}>
           <FontAwesomeIcon icon={faMinus} />
-        </button>
-        <div className="qta">
+        </Button>
+
+        <div className="qta-value">
           <span className="qta-value">{qta}</span>
         </div>
-        <button className="button" onClick={() => handleQtaChange(+1)}>
+
+        <Button className="qta-btn" onClick={() => handleQtaChange(+1)}>
           <FontAwesomeIcon icon={faPlus} />
-        </button>
+        </Button>
       </Flex>
     </ItemRoot>
   );

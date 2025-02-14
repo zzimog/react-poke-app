@@ -1,5 +1,3 @@
-type Key = string | number;
-
 type Size = {
   size: 's' | 'm' | 'l';
   label: string;

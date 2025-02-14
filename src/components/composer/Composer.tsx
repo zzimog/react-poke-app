@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Category from './Category';
 import SizeSelector from './SizeSelector';
 import styled from '@emotion/styled';
 import { Flex, Wrapper } from '@ui';
+import Button from '@ui/Button';
 
 const ComposerRoot = styled(Flex)({
   padding: '1rem',
@@ -13,11 +14,23 @@ const ComposerRoot = styled(Flex)({
     right: 0,
     bottom: 0,
     background: '#fff',
+    borderTop: '1px solid lightgray',
 
-    [`& ${Wrapper}`]: {
+    [`&-wrapper`]: {
       display: 'flex',
       justifyContent: 'space-between',
+      alignItems: 'center',
       padding: '1rem',
+    },
+
+    [`&-price`]: {
+      [`& .label`]: {
+        fontSize: '0.8rem',
+        fontWeight: 400,
+      },
+      [`& .value`]: {
+        fontWeight: 800,
+      },
     },
   },
 });
@@ -28,11 +41,14 @@ const Composer = (inProps: {
 }) => {
   const { data, onSubmit } = inProps;
 
-  const [size, setSize] = useState(1);
+  const [size, setSize] = useState<number>(1);
   const [selected, setSelected] = useState<MapSelected>({});
 
   const limits = data.sizes[size].limits;
   const categories = Object.entries(limits);
+
+  const basePrice = data.sizes[size].price;
+  const totalPrice = useRef<number>(basePrice);
 
   function handleQtaChange(id: Key, index: number, qta: number) {
     setSelected((prev) => {
@@ -89,14 +105,15 @@ const Composer = (inProps: {
       })}
 
       <div className="summary">
-        <Wrapper>
+        <Wrapper className="summary-wrapper">
           <div className="summary-price">
-            <h3>Totale: 0.00 €</h3>
+            <div className="label">Totale</div>
+            <div className="value">{totalPrice.current.toFixed(2)} €</div>
           </div>
 
-          <button onClick={handleSubmit}>
-            <h3>Conferma</h3>
-          </button>
+          <Button onClick={handleSubmit}>
+            <span>Aggiungi all'ordine</span>
+          </Button>
         </Wrapper>
       </div>
     </ComposerRoot>

@@ -1,18 +1,17 @@
 import styled from '@emotion/styled';
-import { PropsWithChildren } from 'react';
 
 const ButtonRoot = styled.button({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  color: '#fff',
+  background: '#000',
+  border: 0,
+  borderRadius: '9999px',
+  padding: '0.8rem 1rem',
   outline: 'none',
   cursor: 'pointer',
+  transition: 'all .125s ease-in-out',
 });
 
-const Button = (inProps: PropsWithChildren) => {
-  const { children, ...props } = inProps;
-
-  return <ButtonRoot {...props}>{children}</ButtonRoot>;
-};
-
-export default Button;
+export default ButtonRoot;

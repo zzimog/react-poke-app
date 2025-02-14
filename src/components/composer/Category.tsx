@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import clsx from 'clsx';
+import { Flex } from '@ui';
 import capitalize from '@ui/utilities/capitalize';
 import Item from './Item';
-import { Flex } from '@ui';
-import clsx from 'clsx';
 
 const CategoryRoot = styled(Flex)({
   [`& .qta`]: {
@@ -75,13 +75,15 @@ const Category = (inProps: {
       <div className="header">
         <h1>{capitalize(label)}</h1>
 
-        <h3>
-          <span className={clsx('qta', max && total > max && '--has-extra')}>
-            {max && `${total}/${max}`}
-          </span>
+        {max && (
+          <h3>
+            <span className={clsx('qta', total > max && '--has-extra')}>
+              {`${total}/${max}`}
+            </span>
 
-          {extraPrice > 0 && <span>+ {extraPrice.toFixed(2)} €</span>}
-        </h3>
+            {extraPrice > 0 && <span>+ {extraPrice.toFixed(2)} €</span>}
+          </h3>
+        )}
       </div>
 
       <div className="grid">

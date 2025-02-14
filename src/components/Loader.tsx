@@ -1,4 +1,4 @@
-import { css, keyframes } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 const rotate = keyframes`
@@ -11,6 +11,12 @@ const rotate = keyframes`
   }
 `;
 
+const LoaderRoot = styled.div({
+  position: 'fixed',
+  inset: 0,
+  background: '#fff',
+});
+
 const Circle = styled.div({
   position: 'absolute',
   top: '50%',
@@ -20,31 +26,20 @@ const Circle = styled.div({
   border: '5px solid #d50000',
   borderTopColor: 'transparent',
   borderRadius: '50%',
+  animation: `${rotate} 1s linear infinite`,
 });
 
-const Loader = () => {
-  return (
-    <div
-      css={css({
-        position: 'fixed',
-        inset: 0,
-        background: '#fff',
-      })}
-    >
-      <Circle
-        css={css({
-          animation: `${rotate} 1s linear infinite`,
-        })}
-      />
-      <Circle
-        css={css({
-          width: '3rem',
-          height: '3rem',
-          animation: `${rotate} 1s linear infinite reverse`,
-        })}
-      />
-    </div>
-  );
-};
+const CircleInner = styled(Circle)({
+  width: '3rem',
+  height: '3rem',
+  animationDirection: 'reverse',
+});
+
+const Loader = () => (
+  <LoaderRoot>
+    <Circle />
+    <CircleInner />
+  </LoaderRoot>
+);
 
 export default Loader;

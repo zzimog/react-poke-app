@@ -1,5 +1,7 @@
+type Key = string | number;
+
 type MapItemQta = {
-  [key: number]: number;
+  [key: Key]: number;
 };
 
 type MapSelected = {

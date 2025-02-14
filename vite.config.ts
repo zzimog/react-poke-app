@@ -6,12 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   base: '/react-poke-app/',
   plugins: [
-    react({
-      jsxImportSource: '@emotion/react',
-      babel: {
-        plugins: ['@emotion/babel-plugin'],
-      },
-    }),
+    react(),
     tsconfigPaths(),
   ],
   server: {
