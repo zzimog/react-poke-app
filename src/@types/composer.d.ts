@@ -9,6 +9,7 @@ type MapSelected = {
 };
 
 type ComposerData = {
+  totalPrice: number;
   size: number;
   selected: MapSelected;
 };

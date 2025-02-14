@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Category from './Category';
 import SizeSelector from './SizeSelector';
 import styled from '@emotion/styled';
@@ -48,7 +48,43 @@ const Composer = (inProps: {
   const categories = Object.entries(limits);
 
   const basePrice = data.sizes[size].price;
-  const totalPrice = useRef<number>(basePrice);
+  const totalPrice = Object.entries(selected).reduce(
+    (prev, [category, selected]) => {
+      const max = limits[category as keyof Size['limits']];
+      const defaultExtraPrice = data.categories[category].extraPrice;
+      const list = data.categories[category].list;
+
+      if (!defaultExtraPrice || !max) {
+        return prev;
+      }
+
+      return (
+        prev +
+        Object.entries(selected)
+          .reduce((prev, [index, qta]) => {
+            const items = [...prev];
+
+            for (let i = 0; i < qta; i++) {
+              items.push(Number(index));
+            }
+
+            return items;
+          }, [] as number[])
+          .sort((a, b) => {
+            const priceA = list[a].extraPrice || defaultExtraPrice || 0;
+            const priceB = list[b].extraPrice || defaultExtraPrice || 0;
+
+            return priceA > priceB ? -1 : 1;
+          })
+          .slice(max)
+          .reduce((sum, index) => {
+            const price = list[index].extraPrice || defaultExtraPrice || 0;
+            return sum + price;
+          }, 0)
+      );
+    },
+    basePrice
+  );
 
   function handleQtaChange(id: Key, index: number, qta: number) {
     setSelected((prev) => {
@@ -74,6 +110,7 @@ const Composer = (inProps: {
   function handleSubmit() {
     if (onSubmit) {
       onSubmit({
+        totalPrice,
         size,
         selected,
       });
@@ -108,7 +145,7 @@ const Composer = (inProps: {
         <Wrapper className="summary-wrapper">
           <div className="summary-price">
             <div className="label">Totale</div>
-            <div className="value">{totalPrice.current.toFixed(2)} €</div>
+            <div className="value">{totalPrice.toFixed(2)} €</div>
           </div>
 
           <Button onClick={handleSubmit}>
