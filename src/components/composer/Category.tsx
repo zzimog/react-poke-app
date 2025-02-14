@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Flex } from '@ui';
 import capitalize from '@ui/utilities/capitalize';
 import Item from './Item';
+import { memo } from 'react';
 
 const CategoryRoot = styled(Flex)({
   [`& .totalQta`]: {
@@ -101,4 +102,4 @@ const Category = (inProps: {
   );
 };
 
-export default Category;
+export default memo(Category);
