@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
-import { css } from '@emotion/react';
 import clsx from 'clsx';
-import Card from '@ui/Card';
 import mediaQuery from '@ui/utilities/mediaQuery';
+import Card from '@ui/Card';
 
 const SizesRoot = styled.div({
   display: 'grid',
@@ -43,6 +42,21 @@ const SizeRoot = styled(Card)({
     [`.image`]: {
       objectFit: 'contain',
       userSelect: 'none',
+
+      [`&.size-s`]: {
+        width: 96,
+        height: 96,
+      },
+
+      [`&.size-m`]: {
+        width: 112,
+        height: 112,
+      },
+
+      [`&.size-l`]: {
+        width: 128,
+        height: 128,
+      },
     },
   },
 
@@ -91,12 +105,6 @@ export const SizeSelector = (inProps: {
 }) => {
   const { sizes = [], selected = 0, onChange } = inProps;
 
-  const imageSize = {
-    s: 96,
-    m: 112,
-    l: 128,
-  };
-
   function handleChange(index: number) {
     if (onChange) {
       onChange(index);
@@ -123,14 +131,7 @@ export const SizeSelector = (inProps: {
             data-size={size}
           >
             <div className="image-container">
-              <img
-                css={css({
-                  width: imageSize[size],
-                  height: imageSize[size],
-                })}
-                className="image"
-                src="./assets/poke.png"
-              />
+              <img className={`image size-${size}`} src="./assets/poke.png" />
             </div>
 
             <div className="info">
