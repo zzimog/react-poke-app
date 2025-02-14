@@ -8,7 +8,13 @@ const Root = styled(Wrapper)({
   display: 'flex',
   flexDirection: 'column',
   gap: '1rem',
-  padding: '1rem 0',
+  padding: '1rem 0 5rem',
+
+  [`& .logo img`]: {
+    width: 'auto',
+    height: 200,
+    margin: 'auto',
+  },
 });
 
 const App = () => {
@@ -38,6 +44,10 @@ const App = () => {
 
   return (
     <Root>
+      <div className="logo">
+        <img src="./assets/logo.png" alt="Poke-A-Booo" />
+      </div>
+
       <Composer data={data} onSubmit={handleSubmit} />
     </Root>
   );

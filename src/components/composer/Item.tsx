@@ -55,6 +55,9 @@ export const ItemRoot = styled(Card)({
   [`& .qta`]: {
     justifyContent: 'space-between',
     alignItems: 'center',
+    background: '#e0e0e0',
+    padding: '0.3rem',
+    borderRadius: '1.3rem',
 
     [`&-value`]: {
       fontWeight: 400,
@@ -64,12 +67,22 @@ export const ItemRoot = styled(Card)({
     [`&-btn`]: {
       width: '2rem',
       height: '2rem',
-      color: '#000',
-      background: 'none',
 
-      [`&:hover`]: {
+      [`&.sub, &.add`]: {
+        [`&:hover`]: {
+          color: '#fff',
+          background: '#d50000',
+        },
+      },
+
+      [`&.sub`]: {
+        color: '#000',
+        background: '#fff',
+      },
+
+      [`&.add`]: {
         color: '#fff',
-        background: '#d50000',
+        background: '#000',
       },
     },
   },
@@ -133,7 +146,7 @@ export const Item = (
       </div>
 
       <Flex direction="row" className="qta">
-        <Button className="qta-btn" onClick={() => handleQtaChange(-1)}>
+        <Button className="qta-btn sub" onClick={() => handleQtaChange(-1)}>
           <FontAwesomeIcon icon={faMinus} />
         </Button>
 
@@ -141,7 +154,7 @@ export const Item = (
           <span className="qta-value">{qta}</span>
         </div>
 
-        <Button className="qta-btn" onClick={() => handleQtaChange(+1)}>
+        <Button className="qta-btn add" onClick={() => handleQtaChange(+1)}>
           <FontAwesomeIcon icon={faPlus} />
         </Button>
       </Flex>

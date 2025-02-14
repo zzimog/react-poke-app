@@ -5,7 +5,7 @@ import capitalize from '@ui/utilities/capitalize';
 import Item from './Item';
 
 const CategoryRoot = styled(Flex)({
-  [`& .qta`]: {
+  [`& .totalQta`]: {
     marginRight: '0.5rem',
 
     [`&.--has-extra`]: {
@@ -77,7 +77,7 @@ const Category = (inProps: {
 
         {max && (
           <h3>
-            <span className={clsx('qta', total > max && '--has-extra')}>
+            <span className={clsx('totalQta', total > max && '--has-extra')}>
               {`${total}/${max}`}
             </span>
 

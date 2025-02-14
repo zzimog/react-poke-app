@@ -11,7 +11,7 @@ const ButtonRoot = styled.button({
   padding: '0.8rem 1rem',
   outline: 'none',
   cursor: 'pointer',
-  transition: 'all .125s ease-in-out',
+  transition: 'all .1s ease-in-out',
 });
 
 export default ButtonRoot;
