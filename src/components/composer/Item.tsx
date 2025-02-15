@@ -55,7 +55,7 @@ export const ItemRoot = styled(Card)({
   [`& .qta`]: {
     justifyContent: 'space-between',
     alignItems: 'center',
-    background: '#e0e0e0',
+    background: '#eee',
     padding: '0.3rem',
     borderRadius: '1.3rem',
 

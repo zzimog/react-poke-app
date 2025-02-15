@@ -12,6 +12,10 @@ const ButtonRoot = styled.button({
   outline: 'none',
   cursor: 'pointer',
   transition: 'all .1s ease-in-out',
+
+  [`&:hover`]: {
+    background: '#333',
+  },
 });
 
 export default ButtonRoot;

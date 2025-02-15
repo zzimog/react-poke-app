@@ -25,7 +25,9 @@
     "paths": {
       "@ui": ["./src/ui/"],
       "@ui/*": ["./src/ui/*"],
-      "@composer/*": ["./src/components/composer/*"]
+      "@composer/*": ["./src/components/composer/*"],
+      "@utils": ["./src/utils"],
+      "@utils/*": ["./src/utils/*"]
     }
   },
   "include": ["**/*"]
